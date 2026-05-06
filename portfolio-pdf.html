@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abothula Srinu - Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 3px solid #00bcd4;
+      padding-bottom: 30px;
+      margin-bottom: 40px;
+    }
+
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #00bcd4;
+      margin-bottom: 20px;
+      object-fit: cover;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .header h2 {
+      font-size: 20px;
+      color: #00bcd4;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section {
+      margin-bottom: 35px;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: #00bcd4;
+      border-bottom: 2px solid #00bcd4;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .about-content p {
+      text-align: justify;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .education-item {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      border-left: 3px solid #00bcd4;
+    }
+
+    .education-item h3 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .education-item .year {
+      font-size: 14px;
+      color: #00bcd4;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .education-item p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .skills-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .skill-category h3 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin-bottom: 15px;
+    }
+
+    .skill-item {
+      margin-bottom: 15px;
+    }
+
+    .skill-name {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .skill-bar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00bcd4, #00e5ff);
+      border-radius: 4px;
+    }
+
+    .project-item {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .project-item h3 {
+      font-size: 18px;
+      color: #00bcd4;
+      margin-bottom: 10px;
+    }
+
+    .project-item p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .project-link {
+      font-size: 13px;
+      color: #666;
+      word-break: break-all;
+    }
+
+    .certificate-item {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      border-left: 3px solid #00bcd4;
+    }
+
+    .certificate-item h4 {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .certificate-item p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .code-sample {
+      margin-bottom: 25px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #00bcd4;
+      page-break-inside: avoid;
+    }
+
+    .code-sample h4 {
+      font-size: 16px;
+      color: #00bcd4;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .code-sample pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .guide-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      border-left: 4px solid #00bcd4;
+      page-break-inside: avoid;
+    }
+
+    .guide-item h4 {
+      font-size: 16px;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .guide-item ul {
+      margin-left: 20px;
+      color: #555;
+    }
+
+    .guide-item li {
+      font-size: 14px;
+      margin-bottom: 5px;
+      line-height: 1.5;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 15px;
+      background: #f0f0f0;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #333;
+      font-size: 13px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid #00bcd4;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .print-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .print-btn:hover {
+      background: #00a5bb;
+    }
+
+    @media print {
+      .print-btn {
+        display: none;
+      }
+      body {
+        padding: 20px;
+      }
+      .section {
+        page-break-inside: avoid;
+      }
+      .social-links {
+        page-break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .skills-container {
+        grid-template-columns: 1fr;
+      }
+      .contact-info {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#" class="print-btn" onclick="window.print(); return false;">📄 Save as PDF</a>
+
+  <!-- Header Section -->
+  <div class="header">
+    <img src="profile-image.jpg" alt="Abothula Srinu" class="profile-img">
+    <h1>Abothula Srinu</h1>
+    <h2>Frontend Developer & Web Designer</h2>
+    
+    <div class="contact-info">
+      <div class="contact-item">
+        <span>📧</span>
+        <span>srinuabothula14@gmail.com</span>
+      </div>
+      <div class="contact-item">
+        <span>📱</span>
+        <span>+91 9398998803</span>
+      </div>
+      <div class="contact-item">
+        <span>📍</span>
+        <span>Srikakulam, Andhra Pradesh, India</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="section">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <p>
+        I'm Abothula Srinu, a motivated and goal-oriented 3rd-year B.Tech student specializing in Computer Science with AI & ML at GMR Institute of Technology. With a strong academic record (CGPA: 9.0) and a passion for programming, I actively pursue opportunities to apply my skills in real-world projects and internships. I'm proficient in Python, Java, and web development, and I've completed certifications in full-stack development and Python essentials. Known for my communication skills, teamwork, and presentation abilities, I'm eager to contribute to dynamic environments that challenge and grow my technical and interpersonal strengths.
+      </p>
+    </div>
+  </div>
+
+  <!-- Education Section -->
+  <div class="section">
+    <h2 class="section-title">Education</h2>
+    
+    <div class="education-item">
+      <div class="year">2023 - 2027</div>
+      <h3>B.Tech in CSE (AI & ML)</h3>
+      <p>GMR Institute Of Technology — CGPA: 9.0</p>
+    </div>
+
+    <div class="education-item">
+      <div class="year">2021 - 2023</div>
+      <h3>Intermediate (MPC)</h3>
+      <p>Sri Chaitanya Junior College — 97%</p>
+    </div>
+
+    <div class="education-item">
+      <div class="year">June 2021</div>
+      <h3>SSC (10th Grade)</h3>
+      <p>Sri Santosh School — 95.6%</p>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div class="section">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-container">
+      <div class="skill-category">
+        <h3>Technical Skills</h3>
+        
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Frontend (HTML, CSS, JS)</span>
+            <span>95%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 95%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Backend Development</span>
+            <span>90%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 90%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Python</span>
+            <span>85%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 85%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>AI & ML</span>
+            <span>80%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 80%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <h3>Professional Skills</h3>
+        
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Creativity</span>
+            <span>90%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 90%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Communication</span>
+            <span>85%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 85%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Problem Solving</span>
+            <span>80%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 80%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-item">
+          <div class="skill-name">
+            <span>Teamwork</span>
+            <span>75%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="width: 75%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
+  <div class="section">
+    <h2 class="section-title">Projects</h2>
+
+    <div class="project-item">
+      <h3>Portfolio Website</h3>
+      <p>My personal portfolio built with HTML, CSS, and JavaScript showcasing my skills and projects. Features responsive design, smooth animations, and interactive elements.</p>
+      <div class="project-link">🔗 https://srinu-portfolio-53a4ff2f.netlify.app</div>
+    </div>
+
+    <div class="project-item">
+      <h3>ATS Resume Scanner</h3>
+      <p>An AI-powered resume scanner that analyzes compatibility with job descriptions and optimizes for ATS systems. Helps job seekers improve their resume success rate.</p>
+      <div class="project-link">🔗 https://ats-resumeworking-qbue.vercel.app/</div>
+    </div>
+
+    <div class="project-item">
+      <h3>Mental Health Platform</h3>
+      <p>A supportive mental health platform providing resources, therapy booking, and wellness tracking tools. Designed to help users manage their mental well-being effectively.</p>
+      <div class="project-link">🔗 https://client-black-gamma.vercel.app</div>
+    </div>
+  </div>
+
+  <!-- Certificates Section -->
+  <div class="section">
+    <h2 class="section-title">Certifications</h2>
+
+    <div class="certificate-item">
+      <h4>Web Development</h4>
+      <p>Certified in Full-Stack Web Development (2024) from GeeksforGeeks</p>
+    </div>
+
+    <div class="certificate-item">
+      <h4>Python Programming</h4>
+      <p>Completed Python Essential 1 from CISCO</p>
+    </div>
+
+    <div class="certificate-item">
+      <h4>Artificial Intelligence</h4>
+      <p>Certified in Artificial Intelligence from LinkedIn Learning</p>
+    </div>
+  </div>
+
+  <!-- Code Samples Section -->
+  <div class="section">
+    <h2 class="section-title">Code Samples</h2>
+
+    <div class="code-sample">
+      <h4>React Component - Portfolio Card</h4>
+      <pre><code>import React from 'react';
+
+const PortfolioCard = ({ title, description, link }) => {
+  return (
+    &lt;div className="portfolio-card"&gt;
+      &lt;h3&gt;{title}&lt;/h3&gt;
+      &lt;p&gt;{description}&lt;/p&gt;
+      &lt;a href={link} target="_blank"&gt;
+        View Project
+      &lt;/a&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default PortfolioCard;</code></pre>
+    </div>
+
+    <div class="code-sample">
+      <h4>Node.js Express API - Contact Form</h4>
+      <pre><code>const express = require('express');
+const router = express.Router();
+
+router.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    
+    // Validate input
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        success: false,
+        message: 'All fields are required'
+      });
+    }
+    
+    // Save to database
+    const newMessage = await Message.create({
+      name, email, message,
+      timestamp: new Date()
+    });
+    
+    res.json({
+      success: true,
+      message: 'Message sent successfully',
+      data: newMessage
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+});
+
+module.exports = router;</code></pre>
+    </div>
+
+    <div class="code-sample">
+      <h4>Python - Machine Learning Model</h4>
+      <pre><code>import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+# Load and prepare data
+data = pd.read_csv('dataset.csv')
+X = data.drop('target', axis=1)
+y = data['target']
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+
+# Evaluate
+predictions = model.predict(X_test)
+print(f"Accuracy: {accuracy_score(y_test, predictions):.2f}")</code></pre>
+    </div>
+  </div>
+
+  <!-- Tech Guides Section -->
+  <div class="section">
+    <h2 class="section-title">Tech Guides & Tutorials</h2>
+
+    <div class="guide-item">
+      <h4>1. Building Responsive Web Applications</h4>
+      <ul>
+        <li>Use CSS Grid and Flexbox for modern layouts</li>
+        <li>Implement mobile-first design approach</li>
+        <li>Use CSS custom properties for theming</li>
+        <li>Optimize images with srcset and lazy loading</li>
+      </ul>
+    </div>
+
+    <div class="guide-item">
+      <h4>2. RESTful API Design Best Practices</h4>
+      <ul>
+        <li>Use meaningful HTTP methods (GET, POST, PUT, DELETE)</li>
+        <li>Implement proper status codes (200, 201, 400, 404, 500)</li>
+        <li>Version your APIs (/api/v1/resource)</li>
+        <li>Use JWT for authentication</li>
+      </ul>
+    </div>
+
+    <div class="guide-item">
+      <h4>3. Security Best Practices</h4>
+      <ul>
+        <li>Never store passwords in plain text - use bcrypt</li>
+        <li>Validate and sanitize all user inputs</li>
+        <li>Use HTTPS for all communications</li>
+        <li>Implement rate limiting for APIs</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Social Links -->
+  <div class="social-links">
+    <a href="https://www.instagram.com/mr.srinu_520" class="social-link">
+      <span>📷</span> Instagram
+    </a>
+    <a href="https://youtube.com/@doncnu1523" class="social-link">
+      <span>▶️</span> YouTube
+    </a>
+    <a href="https://www.linkedin.com/in/abothula-srinu-3642ab333" class="social-link">
+      <span>💼</span> LinkedIn
+    </a>
+    <a href="https://github.com/abothulasrinu3-prog" class="social-link">
+      <span>💻</span> GitHub
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Generated on May 2026 | Abothula Srinu - Portfolio</p>
+    <p>📧 srinuabothula14@gmail.com | 📱 +91 9398998803</p>
+  </div>
+
+</body>
+</html>

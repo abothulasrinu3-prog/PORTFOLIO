@@ -30,6 +30,8 @@ A comprehensive backend system for the portfolio website with real-time contact 
    ```
    EMAIL_USER=your-email@gmail.com
    EMAIL_PASS=your-app-password
+   CONTACT_TO=srinuabothula14@gmail.com
+   CORS_ORIGINS=https://your-portfolio.netlify.app
    ```
 
 3. **Start the server:**
@@ -118,7 +120,10 @@ The server includes comprehensive logging and monitoring:
 | NODE_ENV | Environment mode | development |
 | EMAIL_USER | Gmail address | Required |
 | EMAIL_PASS | Gmail app password | Required |
-| CORS_ORIGIN | Allowed frontend origin | http://localhost:8000 |
+| CONTACT_TO | Email address that receives contact form messages | EMAIL_USER |
+| CORS_ORIGINS | Comma-separated allowed frontend origins | local + common deploy hosts |
+
+If the frontend and backend are deployed on different domains, add the frontend URL to `CORS_ORIGINS`. The contact form uses the current website origin by default; set `window.PORTFOLIO_API_BASE_URL` before `dillu.html`'s main script if your API is hosted somewhere else.
 
 ## API Response Format
 

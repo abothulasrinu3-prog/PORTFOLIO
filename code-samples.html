@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Samples - Abothula Srinu</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #00bcd4;
+      border-bottom: 3px solid #00bcd4;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #00bcd4;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 25px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .description {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border-left: 4px solid #00bcd4;
+    }
+    .print-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .print-btn:hover {
+      background: #00a5bb;
+    }
+    @media print {
+      .print-btn {
+        display: none;
+      }
+      body {
+        background: white;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💻 Code Samples - Abothula Srinu</h1>
+  
+  <a href="#" class="print-btn" onclick="window.print(); return false;">📄 Save as PDF</a>
+
+  <!-- React Component -->
+  <h2>1. React Component - Portfolio Card</h2>
+  <div class="description">
+    <p>A reusable React component for displaying portfolio projects with props for title, description, and link.</p>
+  </div>
+  <div class="code-block">
+<pre>import React from 'react';
+import './PortfolioCard.css';
+
+const PortfolioCard = ({ title, description, link, image, tags }) => {
+  return (
+    &lt;div className="portfolio-card"&gt;
+      {image && (
+        &lt;div className="card-image"&gt;
+          &lt;img src={image} alt={title} /&gt;
+        &lt;/div&gt;
+      )}
+      &lt;div className="card-content"&gt;
+        &lt;h3 className="card-title"&gt;{title}&lt;/h3&gt;
+        &lt;p className="card-description"&gt;{description}&lt;/p&gt;
+        {tags && (
+          &lt;div className="card-tags"&gt;
+            {tags.map((tag, index) =&gt; (
+              &lt;span key={index} className="tag"&gt;{tag}&lt;/span&gt;
+            ))}
+          &lt;/div&gt;
+        )}
+        &lt;a href={link} target="_blank" rel="noopener noreferrer" className="card-link"&gt;
+          View Project →
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+// PropTypes for type checking
+PortfolioCard.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  description: React.PropTypes.string.isRequired,
+  link: React.PropTypes.string.isRequired,
+  image: React.PropTypes.string,
+  tags: React.PropTypes.arrayOf(React.PropTypes.string)
+};
+
+// Default props
+PortfolioCard.defaultProps = {
+  image: null,
+  tags: []
+};
+
+export default PortfolioCard;</pre>
+  </div>
+
+  <!-- Node.js Express API -->
+  <h2>2. Node.js Express API - Contact Form Handler</h2>
+  <div class="description">
+    <p>A RESTful API endpoint for handling contact form submissions with validation, error handling, and email notifications.</p>
+  </div>
+  <div class="code-block">
+<pre>const express = require('express');
+const router = express.Router();
+const nodemailer = require('nodemailer');
+const { body, validationResult } = require('express-validator');
+
+// Configure email transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+// Validation middleware
+const validateContact = [
+  body('name').trim().notEmpty().withMessage('Name is required'),
+  body('email').isEmail().normalizeEmail().withMessage('Valid email required'),
+  body('subject').trim().notEmpty().withMessage('Subject is required'),
+  body('message').trim().notEmpty().withMessage('Message is required')
+];
+
+// POST /api/contact - Submit contact form
+router.post('/contact', validateContact, async (req, res) => {
+  try {
+    // Check validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: errors.array()
+      });
+    }
+
+    const { name, email, subject, message } = req.body;
+
+    // Save to database (example with MongoDB)
+    const newMessage = await Message.create({
+      name,
+      email,
+      subject,
+      message,
+      timestamp: new Date(),
+      read: false
+    });
+
+    // Send email notification
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: 'srinuabothula14@gmail.com',
+      subject: `New Contact: ${subject}`,
+      html: `
+        &lt;h2&gt;New Contact Form Submission&lt;/h2&gt;
+        &lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; ${name}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; ${email}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Subject:&lt;/strong&gt; ${subject}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Message:&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;${message}&lt;/p&gt;
+      `
+    });
+
+    // Send auto-reply to user
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Thank you for contacting me!',
+      html: `
+        &lt;h2&gt;Hi ${name},&lt;/h2&gt;
+        &lt;p&gt;Thank you for reaching out! I've received your message and will get back to you within 24-48 hours.&lt;/p&gt;
+        &lt;p&gt;Best regards,&lt;br&gt;Abothula Srinu&lt;/p&gt;
+      `
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Message sent successfully!',
+      data: newMessage
+    });
+
+  } catch (error) {
+    console.error('Contact form error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send message. Please try again later.'
+    });
+  }
+});
+
+// GET /api/messages - Get all messages (admin)
+router.get('/messages', async (req, res) => {
+  try {
+    const messages = await Message.find().sort({ timestamp: -1 });
+    res.json({
+      success: true,
+      count: messages.length,
+      data: messages
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch messages'
+    });
+  }
+});
+
+module.exports = router;</pre>
+  </div>
+
+  <!-- Python ML Model -->
+  <h2>3. Python - Machine Learning Pipeline</h2>
+  <div class="description">
+    <p>A complete machine learning pipeline using scikit-learn for data preprocessing, model training, and evaluation with RandomForest classifier.</p>
+  </div>
+  <div class="code-block">
+<pre>import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import joblib
+
+class MLPipeline:
+    def __init__(self, data_path):
+        """Initialize the ML pipeline with data path"""
+        self.data_path = data_path
+        self.model = None
+        self.scaler = StandardScaler()
+        self.label_encoders = {}
+        
+    def load_data(self):
+        """Load and display basic info about the dataset"""
+        self.df = pd.read_csv(self.data_path)
+        print(f"Dataset Shape: {self.df.shape}")
+        print(f"\nColumn Types:\n{self.df.dtypes}")
+        print(f"\nMissing Values:\n{self.df.isnull().sum()}")
+        return self.df
+    
+    def preprocess(self, target_column):
+        """Preprocess the data"""
+        # Handle missing values
+        self.df = self.df.dropna()
+        
+        # Encode categorical variables
+        categorical_cols = self.df.select_dtypes(include=['object']).columns
+        
+        for col in categorical_cols:
+            if col != target_column:
+                self.label_encoders[col] = LabelEncoder()
+                self.df[col] = self.label_encoders[col].fit_transform(self.df[col])
+        
+        # Separate features and target
+        X = self.df.drop(target_column, axis=1)
+        y = self.df[target_column]
+        
+        # Scale features
+        X_scaled = self.scaler.fit_transform(X)
+        
+        return X_scaled, y
+    
+    def train_model(self, X, y, test_size=0.2):
+        """Train the model and return metrics"""
+        # Split data
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=42, stratify=y
+        )
+        
+        # Initialize and train model
+        self.model = RandomForestClassifier(
+            n_estimators=100,
+            max_depth=10,
+            random_state=42,
+            n_jobs=-1
+        )
+        
+        self.model.fit(X_train, y_train)
+        
+        # Make predictions
+        y_pred = self.model.predict(X_test)
+        
+        # Calculate metrics
+        accuracy = accuracy_score(y_test, y_pred)
+        cv_scores = cross_val_score(self.model, X, y, cv=5)
+        
+        print(f"\n{'='*50}")
+        print("Model Performance Metrics")
+        print(f"{'='*50}")
+        print(f"Accuracy: {accuracy:.4f}")
+        print(f"Cross-Validation Score: {cv_scores.mean():.4f} (+/- {cv_scores.std()*2:.4f})")
+        print(f"\nClassification Report:\n{classification_report(y_test, y_pred)}")
+        print(f"\nConfusion Matrix:\n{confusion_matrix(y_test, y_pred)}")
+        
+        return {
+            'accuracy': accuracy,
+            'cv_scores': cv_scores,
+            'predictions': y_pred
+        }
+    
+    def save_model(self, model_path, scaler_path):
+        """Save trained model and scaler"""
+        joblib.dump(self.model, model_path)
+        joblib.dump(self.scaler, scaler_path)
+        print(f"\nModel saved to {model_path}")
+        print(f"Scaler saved to {scaler_path}")
+    
+    def load_model(self, model_path, scaler_path):
+        """Load trained model and scaler"""
+        self.model = joblib.load(model_path)
+        self.scaler = joblib.load(scaler_path)
+        print("Model and scaler loaded successfully!")
+    
+    def predict(self, new_data):
+        """Make predictions on new data"""
+        if self.model is None:
+            raise ValueError("Model not trained or loaded!")
+        
+        new_data_scaled = self.scaler.transform(new_data)
+        predictions = self.model.predict(new_data_scaled)
+        probabilities = self.model.predict_proba(new_data_scaled)
+        
+        return predictions, probabilities
+
+# Usage Example
+if __name__ == "__main__":
+    # Initialize pipeline
+    pipeline = MLPipeline('dataset.csv')
+    
+    # Load and preprocess data
+    data = pipeline.load_data()
+    X, y = pipeline.preprocess(target_column='target')
+    
+    # Train model
+    metrics = pipeline.train_model(X, y)
+    
+    # Save model
+    pipeline.save_model('model.pkl', 'scaler.pkl')</pre>
+  </div>
+
+  <!-- JavaScript Animation -->
+  <h2>4. JavaScript - Advanced Smooth Scroll Animation</h2>
+  <div class="description">
+    <p>A smooth scroll implementation with easing functions, requestAnimationFrame, and support for both vertical and horizontal scrolling.</p>
+  </div>
+  <div class="code-block">
+<pre>/**
+ * Advanced Smooth Scroll Animation Library
+ * Features: Multiple easing functions, horizontal/vertical scroll, callback support
+ */
+
+class SmoothScroll {
+  constructor(options = {}) {
+    this.duration = options.duration || 1000;
+    this.easing = options.easing || 'easeInOutCubic';
+    this.offset = options.offset || 0;
+    this.onStart = options.onStart || null;
+    this.onComplete = options.onComplete || null;
+  }
+
+  // Easing functions
+  static easings = {
+    linear: t => t,
+    easeInQuad: t => t * t,
+    easeOutQuad: t => t * (2 - t),
+    easeInOutQuad: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+    easeInCubic: t => t * t * t,
+    easeOutCubic: t => (--t) * t * t + 1,
+    easeInOutCubic: t => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+    easeInExpo: t => t === 0 ? 0 : Math.pow(2, 10 * (t - 1)),
+    easeOutExpo: t => t === 1 ? 1 : -Math.pow(2, -10 * t) + 1,
+    easeInOutExpo: t => {
+      if (t === 0 || t === 1) return t;
+      if (t < 0.5) return Math.pow(2, 20 * t - 10) / 2;
+      return (2 - Math.pow(2, -20 * t + 10)) / 2;
+    }
+  };
+
+  /**
+   * Scroll to a specific element
+   * @param {string|Element} target - Selector or DOM element
+   */
+  to(target) {
+    const element = typeof target === 'string' 
+      ? document.querySelector(target) 
+      : target;
+    
+    if (!element) {
+      console.error('Target element not found');
+      return;
+    }
+
+    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition - this.offset;
+    
+    this.animate(startPosition, distance);
+  }
+
+  /**
+   * Scroll to top of page
+   */
+  toTop() {
+    this.animate(window.pageYOffset, -window.pageYOffset);
+  }
+
+  /**
+   * Scroll to bottom of page
+   */
+  toBottom() {
+    const distance = document.documentElement.scrollHeight - window.innerHeight - window.pageYOffset;
+    this.animate(window.pageYOffset, distance);
+  }
+
+  /**
+   * Animate scroll
+   * @param {number} startPosition - Starting scroll position
+   * @param {number} distance - Distance to scroll
+   */
+  animate(startPosition, distance) {
+    const startTime = performance.now();
+    const easingFunction = SmoothScroll.easings[this.easing];
+
+    // Call onStart callback
+    if (this.onStart) this.onStart();
+
+    const animation = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / this.duration, 1);
+      const easedProgress = easingFunction(progress);
+
+      window.scrollTo(0, startPosition + distance * easedProgress);
+
+      if (progress < 1) {
+        requestAnimationFrame(animation);
+      } else {
+        // Call onComplete callback
+        if (this.onComplete) this.onComplete();
+      }
+    };
+
+    requestAnimationFrame(animation);
+  }
+}
+
+// Usage Examples
+
+// 1. Basic usage
+const scroll = new SmoothScroll({ duration: 1200 });
+scroll.to('#about-section');
+
+// 2. With callbacks
+const scrollWithCallbacks = new SmoothScroll({
+  duration: 1500,
+  easing: 'easeInOutExpo',
+  offset: 80, // Offset for fixed header
+  onStart: () => console.log('Scroll started'),
+  onComplete: () => console.log('Scroll completed')
+});
+scrollWithCallbacks.to('#projects');
+
+// 3. Scroll to top
+const scrollTop = new SmoothScroll({ duration: 800, easing: 'easeOutCubic' });
+scrollTop.toTop();
+
+// 4. Initialize smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = this.getAttribute('href');
+    const scroll = new SmoothScroll({ 
+      duration: 1000, 
+      offset: 70,
+      easing: 'easeInOutCubic'
+    });
+    scroll.to(target);
+  });
+});
+
+// Export for module usage
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = SmoothScroll;
+}</pre>
+  </div>
+
+  <!-- CSS Grid Layout -->
+  <h2>5. CSS - Modern Grid Layout System</h2>
+  <div class="description">
+    <p>A responsive CSS Grid layout system with named areas, auto-fit columns, and responsive breakpoints.</p>
+  </div>
+  <div class="code-block">
+<pre>/* Modern CSS Grid Layout System */
+
+/* Base Grid Container */
+.grid-container {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Auto-fit Responsive Grid */
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* Named Grid Areas Layout */
+.page-layout {
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "sidebar main main"
+    "footer footer footer";
+  grid-template-columns: 250px 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.page-header { grid-area: header; }
+.page-sidebar { grid-area: sidebar; }
+.page-main { grid-area: main; }
+.page-footer { grid-area: footer; }
+
+/* Masonry-like Grid */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  grid-auto-rows: masonry;
+}
+
+/* Holy Grail Layout */
+.holy-grail {
+  display: grid;
+  grid-template:
+    "header header header" auto
+    "nav main aside" 1fr
+    "footer footer footer" auto
+    / 200px 1fr 200px;
+  min-height: 100vh;
+}
+
+/* Responsive Grid */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Grid with Overlap */
+.overlap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+
+.overlap-item {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.overlap-item:nth-child(2) {
+  z-index: 1;
+  transform: translateY(20px);
+}
+
+/* Card Grid with Fixed Height */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-auto-rows: 380px;
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Complex Dashboard Layout */
+.dashboard {
+  display: grid;
+  grid-template:
+    "header header" 60px
+    "sidebar content" 1fr
+    / 240px 1fr;
+  height: 100vh;
+}
+
+.dashboard-header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dashboard-sidebar {
+  grid-area: sidebar;
+  overflow-y: auto;
+}
+
+.dashboard-content {
+  grid-area: content;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+/* Utility Classes */
+.grid-span-2 { grid-column: span 2; }
+.grid-span-3 { grid-column: span 3; }
+.grid-span-full { grid-column: 1 / -1; }
+
+.grid-row-span-2 { grid-row: span 2; }
+.grid-row-span-3 { grid-row: span 3; }
+
+.grid-center {
+  display: grid;
+  place-items: center;
+}
+
+/* Gap Utilities */
+.gap-xs { gap: 4px; }
+.gap-sm { gap: 8px; }
+.gap-md { gap: 16px; }
+.gap-lg { gap: 24px; }
+.gap-xl { gap: 32px; }</pre>
+  </div>
+
+  <div class="description" style="margin-top: 40px; text-align: center;">
+    <p><strong>📧 Contact:</strong> srinuabothula14@gmail.com | <strong>📱 Phone:</strong> +91 9398998803</p>
+    <p><strong>🔗 GitHub:</strong> github.com/abothulasrinu3-prog | <strong>💼 LinkedIn:</strong> linkedin.com/in/abothula-srinu-3642ab333</p>
+  </div>
+
+</body>
+</html>

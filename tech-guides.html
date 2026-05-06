@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Guides - Abothula Srinu</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f5f5f5;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #00bcd4;
+      border-bottom: 3px solid #00bcd4;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #00bcd4;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    .guide-section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      border-left: 4px solid #00bcd4;
+      page-break-inside: avoid;
+    }
+    .guide-section h3 {
+      color: #1a1a1a;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    .guide-section ul {
+      margin-left: 20px;
+    }
+    .guide-section li {
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .tip-box {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 15px;
+      border-left: 4px solid #2196f3;
+    }
+    .tip-box strong {
+      color: #1976d2;
+    }
+    .code-snippet {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    .print-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .print-btn:hover {
+      background: #00a5bb;
+    }
+    @media print {
+      .print-btn {
+        display: none;
+      }
+      body {
+        background: white;
+        padding: 20px;
+      }
+      .guide-section {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📚 Tech Guides & Tutorials - Abothula Srinu</h1>
+  
+  <a href="#" class="print-btn" onclick="window.print(); return false;">📄 Save as PDF</a>
+
+  <!-- Guide 1: Responsive Web Apps -->
+  <div class="guide-section">
+    <h3>1. Building Responsive Web Applications</h3>
+    <ul>
+      <li><strong>Use CSS Grid and Flexbox</strong> - Modern layout systems for complex designs</li>
+      <li><strong>Implement mobile-first design</strong> - Start with mobile, scale up for desktop</li>
+      <li><strong>Use CSS custom properties</strong> - Variables for consistent theming</li>
+      <li><strong>Optimize images</strong> - Use srcset, sizes, and lazy loading</li>
+      <li><strong>Test on multiple devices</strong> - Use browser DevTools device emulation</li>
+      <li><strong>Use relative units</strong> - rem, em, %, vw, vh for scalability</li>
+    </ul>
+    <div class="tip-box">
+      <strong>Pro Tip:</strong> Use CSS clamp() for fluid typography: <code>font-size: clamp(1rem, 2vw, 1.5rem);</code>
+    </div>
+    <div class="code-snippet">
+<pre>/* Responsive Grid Example */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Responsive Typography */
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+/* Responsive Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}</pre>
+    </div>
+  </div>
+
+  <!-- Guide 2: RESTful API Design -->
+  <div class="guide-section">
+    <h3>2. RESTful API Design Best Practices</h3>
+    <ul>
+      <li><strong>Use meaningful HTTP methods</strong> - GET (read), POST (create), PUT (update), DELETE (remove)</li>
+      <li><strong>Implement proper status codes</strong> - 200 (OK), 201 (Created), 400 (Bad Request), 404 (Not Found), 500 (Server Error)</li>
+      <li><strong>Use nouns for resources</strong> - /users, /products, /orders (not /getUsers)</li>
+      <li><strong>Version your APIs</strong> - /api/v1/resource for backward compatibility</li>
+      <li><strong>Implement pagination</strong> - Use limit and offset for large datasets</li>
+      <li><strong>Use JWT for authentication</strong> - Stateless, secure token-based auth</li>
+      <li><strong>Document your API</strong> - Use Swagger/OpenAPI for documentation</li>
+    </ul>
+    <div class="code-snippet">
+<pre>// RESTful API Endpoints Example
+GET    /api/v1/users           // Get all users
+GET    /api/v1/users/:id       // Get single user
+POST   /api/v1/users           // Create new user
+PUT    /api/v1/users/:id       // Update user
+DELETE /api/v1/users/:id       // Delete user
+
+// Pagination Example
+GET /api/v1/users?page=1&limit=10
+
+// Response with metadata
+{
+  "success": true,
+  "data": [...],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 100,
+    "pages": 10
+  }
+}</pre>
+    </div>
+  </div>
+
+  <!-- Guide 3: JavaScript Performance -->
+  <div class="guide-section">
+    <h3>3. JavaScript Performance Optimization</h3>
+    <ul>
+      <li><strong>Minimize DOM manipulations</strong> - Batch updates, use DocumentFragment</li>
+      <li><strong>Use debouncing and throttling</strong> - Limit function execution rate</li>
+      <li><strong>Implement code splitting</strong> - Load only needed code chunks</li>
+      <li><strong>Use Web Workers</strong> - Offload CPU-intensive tasks</li>
+      <li><strong>Optimize loops</strong> - Cache array length, avoid nested loops</li>
+      <li><strong>Cache DOM queries</strong> - Store references instead of querying repeatedly</li>
+      <li><strong>Use requestAnimationFrame</strong> - Smooth animations, better performance</li>
+    </ul>
+    <div class="code-snippet">
+<pre>// Debounce Function
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Throttle Function
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Usage
+const handleResize = debounce(() => {
+  console.log('Resized!');
+}, 250);
+window.addEventListener('resize', handleResize);</pre>
+    </div>
+  </div>
+
+  <!-- Guide 4: Python Best Practices -->
+  <div class="guide-section">
+    <h3>4. Python Best Practices</h3>
+    <ul>
+      <li><strong>Follow PEP 8 style guide</strong> - Consistent code formatting</li>
+      <li><strong>Use virtual environments</strong> - Isolate project dependencies</li>
+      <li><strong>Write docstrings</strong> - Document functions and classes</li>
+      <li><strong>Use list comprehensions</strong> - Concise, readable code</li>
+      <li><strong>Handle exceptions gracefully</strong> - Use try-except blocks</li>
+      <li><strong>Use type hints</strong> - Better code clarity and IDE support</li>
+      <li><strong>Follow DRY principle</strong> - Don't Repeat Yourself</li>
+    </ul>
+    <div class="code-snippet">
+<pre># Docstring Example
+def calculate_average(numbers: list[float]) -> float:
+    """
+    Calculate the average of a list of numbers.
+    
+    Args:
+        numbers: List of numeric values
+        
+    Returns:
+        The average value as a float
+        
+    Raises:
+        ValueError: If the list is empty
+    """
+    if not numbers:
+        raise ValueError("List cannot be empty")
+    return sum(numbers) / len(numbers)
+
+# List Comprehension
+squares = [x**2 for x in range(10)]
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+
+# Type Hints
+from typing import List, Dict, Optional
+
+def process_data(
+    items: List[Dict[str, any]],
+    threshold: Optional[float] = None
+) -> List[Dict]:
+    return [item for item in items if item.get('value', 0) > (threshold or 0)]</pre>
+    </div>
+  </div>
+
+  <!-- Guide 5: Git Workflow -->
+  <div class="guide-section">
+    <h3>5. Git Version Control Workflow</h3>
+    <ul>
+      <li><strong>Use meaningful commit messages</strong> - Describe what and why, not how</li>
+      <li><strong>Create feature branches</strong> - One branch per feature/bugfix</li>
+      <li><strong>Use pull requests</strong> - Code review before merging</li>
+      <li><strong>Keep commits small and focused</strong> - One logical change per commit</li>
+      <li><strong>Use .gitignore</strong> - Exclude unnecessary files</li>
+      <li><strong>Tag releases</strong> - Mark version milestones</li>
+      <li><strong>Write good README</strong> - Project documentation</li>
+    </ul>
+    <div class="code-snippet">
+<pre># Git Commands Cheat Sheet
+
+# Create and switch to new branch
+git checkout -b feature/new-feature
+
+# Stage and commit changes
+git add .
+git commit -m "feat: add user authentication"
+
+# Push to remote
+git push origin feature/new-feature
+
+# Create pull request (GitHub CLI)
+gh pr create --title "Add user authentication" --body "Description..."
+
+# Merge branch
+git checkout main
+git merge --no-ff feature/new-feature
+
+# Tag release
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+
+# Useful aliases
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.st status
+git config --global alias.lg "log --oneline --graph"</pre>
+    </div>
+  </div>
+
+  <!-- Guide 6: Database Design -->
+  <div class="guide-section">
+    <h3>6. Database Design Principles</h3>
+    <ul>
+      <li><strong>Normalize data</strong> - Reduce redundancy, improve integrity</li>
+      <li><strong>Use appropriate data types</strong> - Optimize storage and performance</li>
+      <li><strong>Create indexes</strong> - Speed up frequently queried fields</li>
+      <li><strong>Implement foreign keys</strong> - Enforce referential integrity</li>
+      <li><strong>Use transactions</strong> - Ensure data consistency</li>
+      <li><strong>Backup regularly</strong> - Prevent data loss</li>
+      <li><strong>Use connection pooling</strong> - Optimize database connections</li>
+    </ul>
+    <div class="code-snippet">
+<pre>-- Database Schema Example (PostgreSQL)
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create index for frequently queried field
+CREATE INDEX idx_users_email ON users(email);
+
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  content TEXT,
+  published BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create composite index
+CREATE INDEX idx_posts_user_published ON posts(user_id, published);
+
+-- Transaction Example
+BEGIN;
+  UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;</pre>
+    </div>
+  </div>
+
+  <!-- Guide 7: Security Best Practices -->
+  <div class="guide-section">
+    <h3>7. Security Best Practices</h3>
+    <ul>
+      <li><strong>Never store plain text passwords</strong> - Use bcrypt, argon2, or scrypt</li>
+      <li><strong>Validate and sanitize inputs</strong> - Prevent SQL injection, XSS attacks</li>
+      <li><strong>Use HTTPS everywhere</strong> - Encrypt all communications</li>
+      <li><strong>Implement CORS correctly</strong> - Restrict allowed origins</li>
+      <li><strong>Use environment variables</strong> - Never hardcode secrets</li>
+      <li><strong>Keep dependencies updated</strong> - Fix known vulnerabilities</li>
+      <li><strong>Implement rate limiting</strong> - Prevent brute force attacks</li>
+      <li><strong>Use security headers</strong> - CSP, X-Frame-Options, HSTS</li>
+    </ul>
+    <div class="code-snippet">
+<pre>// Password Hashing with bcrypt (Node.js)
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
+
+// Hash password
+const hash = await bcrypt.hash(password, saltRounds);
+
+// Verify password
+const match = await bcrypt.compare(password, hash);
+
+// Input Validation with Joi
+const Joi = require('joi');
+
+const schema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(8).max(30).required(),
+  username: Joi.string().alphanum().min(3).max(30).required()
+});
+
+const { error, value } = schema.validate(req.body);
+
+// Express Security Headers
+const helmet = require('helmet');
+app.use(helmet());
+
+// Rate Limiting
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);</pre>
+    </div>
+  </div>
+
+  <!-- Guide 8: Deployment & DevOps -->
+  <div class="guide-section">
+    <h3>8. Deployment & DevOps Best Practices</h3>
+    <ul>
+      <li><strong>Use CI/CD pipelines</strong> - Automate testing and deployment</li>
+      <li><strong>Containerize with Docker</strong> - Consistent environments</li>
+      <li><strong>Use environment configs</strong> - Separate dev, staging, production</li>
+      <li><strong>Implement logging</strong> - Track errors and performance</li>
+      <li><strong>Set up monitoring</strong> - Alert on issues proactively</li>
+      <li><strong>Automated backups</strong> - Regular data backups</li>
+      <li><strong>Use CDN</strong> - Faster static asset delivery</li>
+      <li><strong>Configure caching</strong> - Reduce server load</li>
+    </ul>
+    <div class="code-snippet">
+<pre># Dockerfile Example
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
+
+# Docker Compose
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=mongodb://mongo:27017/mydb
+    depends_on:
+      - mongo
+  
+  mongo:
+    image: mongo:6
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo-data:
+
+# GitHub Actions CI/CD
+name: Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod</pre>
+    </div>
+  </div>
+
+  <!-- Guide 9: Testing -->
+  <div class="guide-section">
+    <h3>9. Testing Best Practices</h3>
+    <ul>
+      <li><strong>Write unit tests</strong> - Test individual functions/components</li>
+      <li><strong>Use integration tests</strong> - Test component interactions</li>
+      <li><strong>Implement E2E tests</strong> - Test complete user flows</li>
+      <li><strong>Use test coverage tools</strong> - Aim for 80%+ coverage</li>
+      <li><strong>Mock external dependencies</strong> - Isolate units for testing</li>
+      <li><strong>Write descriptive test names</strong> - Document expected behavior</li>
+      <li><strong>Use TDD when appropriate</strong> - Write tests before code</li>
+    </ul>
+    <div class="code-snippet">
+<pre>// Jest Unit Test Example
+describe('UserService', () => {
+  describe('createUser', () => {
+    it('should create a new user with valid data', async () => {
+      const userData = {
+        email: 'test@example.com',
+        username: 'testuser'
+      };
+      
+      const user = await UserService.createUser(userData);
+      
+      expect(user).toBeDefined();
+      expect(user.email).toBe(userData.email);
+      expect(user.id).toBeDefined();
+    });
+    
+    it('should throw error for duplicate email', async () => {
+      await expect(
+        UserService.createUser({ email: 'existing@example.com' })
+      ).rejects.toThrow('Email already exists');
+    });
+  });
+});
+
+// React Testing Library
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('submits form with user input', async () => {
+  render(&lt;ContactForm /&gt;);
+  
+  await userEvent.type(screen.getByLabelText(/name/i), 'John Doe');
+  await userEvent.type(screen.getByLabelText(/email/i), 'john@example.com');
+  await userEvent.click(screen.getByRole('button', { name: /submit/i }));
+  
+  expect(screen.getByText(/thank you/i)).toBeInTheDocument();
+});</pre>
+    </div>
+  </div>
+
+  <!-- Guide 10: Clean Code -->
+  <div class="guide-section">
+    <h3>10. Clean Code Principles</h3>
+    <ul>
+      <li><strong>Use meaningful names</strong> - Variables, functions, classes should reveal intent</li>
+      <li><strong>Keep functions small</strong> - One function, one purpose</li>
+      <li><strong>Follow DRY principle</strong> - Don't Repeat Yourself</li>
+      <li><strong>Write self-documenting code</strong> - Code should be readable without comments</li>
+      <li><strong>Handle errors properly</strong> - Don't ignore exceptions</li>
+      <li><strong>Keep it simple (KISS)</strong> - Avoid over-engineering</li>
+      <li><strong>Use consistent formatting</strong> - Use linters and formatters</li>
+    </ul>
+    <div class="tip-box">
+      <strong>Remember:</strong> "Any fool can write code that a computer can understand. Good programmers write code that humans can understand." - Martin Fowler
+    </div>
+  </div>
+
+  <div class="guide-section" style="text-align: center; margin-top: 40px;">
+    <h3>📧 Contact Information</h3>
+    <p><strong>Email:</strong> srinuabothula14@gmail.com</p>
+    <p><strong>Phone:</strong> +91 9398998803</p>
+    <p><strong>GitHub:</strong> github.com/abothulasrinu3-prog</p>
+    <p><strong>LinkedIn:</strong> linkedin.com/in/abothula-srinu-3642ab333</p>
+  </div>
+
+</body>
+</html>

@@ -6,10 +6,45 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3004;
+const DEFAULT_OWNER_EMAIL = 'srinuabothula14@gmail.com';
+const ownerEmail = process.env.CONTACT_TO || process.env.EMAIL_USER || DEFAULT_OWNER_EMAIL;
+const allowedOrigins = (process.env.CORS_ORIGINS || process.env.CORS_ORIGIN || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:8000', 'file://', 'http://127.0.0.1:8000'],
+  origin(origin, callback) {
+    const localOrigins = [
+      'null',
+      'http://localhost:3004',
+      'http://127.0.0.1:3004',
+      'http://localhost:3005',
+      'http://127.0.0.1:3005',
+      'http://localhost:5500',
+      'http://127.0.0.1:5500',
+      'http://localhost:8000',
+      'http://127.0.0.1:8000'
+    ];
+
+    if (!origin || localOrigins.includes(origin) || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.length === 0) {
+      try {
+        const host = new URL(origin).hostname;
+        if (/\.netlify\.app$|\.vercel\.app$|\.onrender\.com$/.test(host)) {
+          return callback(null, true);
+        }
+      } catch (error) {
+        return callback(error);
+      }
+    }
+
+    return callback(new Error(`CORS blocked origin: ${origin}`));
+  },
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
@@ -21,6 +56,9 @@ console.log('📧 Email Pass length:', process.env.EMAIL_PASS ? process.env.EMAI
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 15000,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
@@ -28,13 +66,15 @@ const transporter = nodemailer.createTransport({
 });
 
 // Verify email configuration
-transporter.verify((error, success) => {
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  transporter.verify((error, success) => {
   if (error) {
     console.log('❌ Email configuration error:', error);
   } else {
     console.log('✅ Email server is ready to send messages');
   }
-});
+  });
+}
 
 // Serve static files
 app.use(express.static(path.join(__dirname)));
@@ -109,10 +149,18 @@ app.post('/api/contact', async (req, res) => {
   });
 
   try {
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      return res.status(503).json({
+        success: false,
+        message: `Email service is not configured. Please contact me directly at ${DEFAULT_OWNER_EMAIL}.`
+      });
+    }
+
     // Email to you (portfolio owner)
     const mailToOwner = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+      to: ownerEmail,
+      replyTo: email,
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
@@ -148,6 +196,7 @@ app.post('/api/contact', async (req, res) => {
     const mailToSender = {
       from: process.env.EMAIL_USER,
       to: email,
+      replyTo: ownerEmail,
       subject: 'Thank you for contacting me!',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5;">
@@ -164,15 +213,20 @@ app.post('/api/contact', async (req, res) => {
       `
     };
 
-    // Send both emails
+    // Send the owner notification first. This is the message that must succeed.
     await transporter.sendMail(mailToOwner);
-    await transporter.sendMail(mailToSender);
+
+    try {
+      await transporter.sendMail(mailToSender);
+    } catch (autoReplyError) {
+      console.error('Could not send auto-reply:', autoReplyError);
+    }
 
     console.log('✅ Emails sent successfully');
 
     res.status(201).json({
       success: true,
-      message: 'Message sent successfully! You will receive a confirmation email shortly.',
+      message: 'Message sent successfully! I will get back to you soon.',
       data: {
         id: Date.now(),
         timestamp: new Date().toISOString()

@@ -1664,44 +1664,44 @@
   <section class="downloads" id="downloads">
     <h2 class="section-title" data-aos="fade-up">Downloads & Resources</h2>
     <div class="downloads-container">
-      <div class="download-card" data-aos="fade-up" data-aos-delay="100" onclick="downloadResume()">
+      <div class="download-card" data-aos="fade-up" data-aos-delay="100">
         <div class="download-icon">
           <i class="fas fa-file-pdf"></i>
         </div>
         <h3>Resume</h3>
         <p>Download my latest resume in PDF format</p>
-        <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadResume()">
+        <a href="Srinu-Resume-complete.pdf" download="Srinu-Resume-complete.pdf" class="download-btn">
           <i class="fas fa-download"></i> Download
         </a>
       </div>
-      <div class="download-card" data-aos="fade-up" data-aos-delay="200" onclick="downloadPortfolio()">
+      <div class="download-card" data-aos="fade-up" data-aos-delay="200">
         <div class="download-icon">
           <i class="fas fa-briefcase"></i>
         </div>
         <h3>Portfolio PDF</h3>
         <p>Complete portfolio overview and projects</p>
-        <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadPortfolio()">
+        <a href="https://willowy-fairy-446fbc.netlify.app/" target="_blank" rel="noopener noreferrer" class="download-btn">
           <i class="fas fa-download"></i> Download
         </a>
       </div>
-      <div class="download-card" data-aos="fade-up" data-aos-delay="300" onclick="downloadCodeSamples()">
+      <div class="download-card" data-aos="fade-up" data-aos-delay="300">
         <div class="download-icon">
           <i class="fas fa-code"></i>
         </div>
         <h3>Code Samples</h3>
         <p>Collection of best code examples and snippets</p>
-        <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadCodeSamples()">
-          <i class="fas fa-download"></i> Download
+        <a href="code-samples.html" target="_blank" class="download-btn">
+          <i class="fas fa-external-link-alt"></i> View Code Samples
         </a>
       </div>
-      <div class="download-card" data-aos="fade-up" data-aos-delay="400" onclick="downloadGuides()">
+      <div class="download-card" data-aos="fade-up" data-aos-delay="400">
         <div class="download-icon">
           <i class="fas fa-book"></i>
         </div>
         <h3>Tech Guides</h3>
         <p>Technical guides and tutorials I've written</p>
-        <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadGuides()">
-          <i class="fas fa-download"></i> Download
+        <a href="tech-guides.html" target="_blank" class="download-btn">
+          <i class="fas fa-external-link-alt"></i> View Tech Guides
         </a>
       </div>
     </div>
@@ -2046,16 +2046,9 @@
     }
 
     function downloadPortfolio() {
-      showNotification('Downloading Portfolio PDF...', 'success');
+      showNotification('Opening Portfolio...', 'success');
       trackDownload('portfolio');
-      
-      setTimeout(() => {
-        const link = document.createElement('a');
-        link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('Portfolio - Abothula Srinu\n\nComplete portfolio overview with projects, skills, and experience.\n\nVisit: http://localhost:8000 for the interactive version.');
-        link.download = 'Abothula_Srinu_Portfolio.txt';
-        link.click();
-        showNotification('Portfolio downloaded successfully!', 'success');
-      }, 1000);
+      window.open('https://willowy-fairy-446fbc.netlify.app/', '_blank', 'noopener,noreferrer');
     }
 
     function downloadCodeSamples() {
@@ -2649,14 +2642,75 @@ X_train, X_test, y_train, y_test = train_test_split(data.drop('target', axis=1),
     `;
     document.head.appendChild(style);
 
+    const API_BASE_URLS = [
+      window.PORTFOLIO_API_BASE_URL,
+      window.location.protocol === 'file:' ? null : window.location.origin,
+      'http://localhost:3004',
+      'http://127.0.0.1:3004',
+      'http://localhost:3005',
+      'http://127.0.0.1:3005',
+      'http://localhost:3006',
+      'http://127.0.0.1:3006'
+    ].filter(Boolean);
+
+    function uniqueApiBaseUrls() {
+      return [...new Set(API_BASE_URLS.map(url => url.replace(/\/$/, '')))];
+    }
+
+    async function postToApi(path, payload) {
+      const errors = [];
+
+      for (const baseUrl of uniqueApiBaseUrls()) {
+        try {
+          const response = await fetch(`${baseUrl}${path}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const contentType = response.headers.get('content-type') || '';
+          const result = contentType.includes('application/json')
+            ? await response.json()
+            : { success: false, message: await response.text() };
+
+          if (response.ok && result.success) {
+            return result;
+          }
+
+          errors.push(`${baseUrl}: ${result.message || response.statusText}`);
+        } catch (error) {
+          errors.push(`${baseUrl}: ${error.message}`);
+        }
+      }
+
+      throw new Error(errors.join(' | ') || 'No contact API available');
+    }
+
+    function openEmailFallback({ name, email, subject, message }) {
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        '',
+        message
+      ].join('\n');
+
+      window.location.href = `mailto:srinuabothula14@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
     // Real Backend Contact Form
     async function sendMessage(event) {
       event.preventDefault();
       
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const company = document.getElementById('company').value.trim();
       const subject = document.getElementById('subject').value.trim();
       const message = document.getElementById('message').value.trim();
+      const priority = document.getElementById('priority')?.value || '';
+      const projectType = document.getElementById('projectType')?.value || '';
       const status = document.getElementById('form-status');
       const submitBtn = event.target.querySelector('.submit-btn');
       
@@ -2723,23 +2777,19 @@ X_train, X_test, y_train, y_test = train_test_split(data.drop('target', axis=1),
       status.textContent = 'Sending message...';
       
       try {
-        const response = await fetch('http://localhost:3004/api/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            subject,
-            message,
-            timestamp: new Date().toISOString()
-          })
+        const result = await postToApi('/api/contact', {
+          name,
+          email,
+          phone,
+          company,
+          subject,
+          message,
+          priority,
+          projectType,
+          timestamp: new Date().toISOString()
         });
         
-        const result = await response.json();
-        
-        if (response.ok && result.success) {
+        if (result.success) {
           status.style.color = '#4caf50';
           status.style.background = '#e8f5e8';
           status.style.padding = '10px';
@@ -2776,8 +2826,9 @@ X_train, X_test, y_train, y_test = train_test_split(data.drop('target', axis=1),
         status.style.padding = '10px';
         status.style.borderRadius = '5px';
         status.style.border = '1px solid #ff4444';
-        status.textContent = '❌ Failed to send message. Please try again later.';
-        showNotification('Failed to send message. Please try again.', 'error');
+        status.textContent = 'Could not reach the contact server. Opening your email app instead.';
+        showNotification('Opening your email app to send the message.', 'error');
+        openEmailFallback({ name, email, subject, message });
         
         // Track failed submission
         trackEvent('contact_form_submit', {
@@ -2885,15 +2936,19 @@ X_train, X_test, y_train, y_test = train_test_split(data.drop('target', axis=1),
       try {
         // Only try to send to backend if it's available
         if (navigator.onLine) {
-          const response = await fetch('http://localhost:3004/api/analytics', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
+          for (const baseUrl of uniqueApiBaseUrls()) {
+            try {
+              await fetch(`${baseUrl}/api/analytics`, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                }
+              });
+              break;
+            } catch (error) {
+              console.log('Backend not available, using local storage only');
             }
-          }).catch(() => {
-            // Silently fail if backend is not available
-            console.log('Backend not available, using local storage only');
-          });
+          }
         }
         
         // Store in localStorage for backup

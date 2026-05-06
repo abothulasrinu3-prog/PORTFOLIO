@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abothula Srinu - Resume</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 3px solid #00bcd4;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .header h2 {
+      font-size: 18px;
+      color: #00bcd4;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .section {
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      font-size: 18px;
+      color: #00bcd4;
+      border-bottom: 2px solid #00bcd4;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .about-content {
+      font-size: 14px;
+      text-align: justify;
+      color: #444;
+    }
+
+    .education-item {
+      margin-bottom: 15px;
+      padding-left: 15px;
+      border-left: 3px solid #00bcd4;
+    }
+
+    .education-item h3 {
+      font-size: 15px;
+      color: #1a1a1a;
+      margin-bottom: 3px;
+    }
+
+    .education-item .year {
+      font-size: 13px;
+      color: #00bcd4;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .education-item p {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .skill-category h3 {
+      font-size: 14px;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .skill-list {
+      list-style: none;
+    }
+
+    .skill-list li {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 5px;
+      padding-left: 15px;
+      position: relative;
+    }
+
+    .skill-list li:before {
+      content: "•";
+      color: #00bcd4;
+      position: absolute;
+      left: 0;
+    }
+
+    .project-item {
+      margin-bottom: 15px;
+    }
+
+    .project-item h3 {
+      font-size: 15px;
+      color: #00bcd4;
+      margin-bottom: 5px;
+    }
+
+    .project-item p {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .project-item .tech-stack {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .certificate-item {
+      margin-bottom: 10px;
+      padding-left: 15px;
+      border-left: 3px solid #e0e0e0;
+    }
+
+    .certificate-item h4 {
+      font-size: 14px;
+      color: #1a1a1a;
+      margin-bottom: 3px;
+    }
+
+    .certificate-item p {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .print-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .print-btn:hover {
+      background: #00a5bb;
+    }
+
+    @media print {
+      .print-btn {
+        display: none;
+      }
+      body {
+        padding: 20px;
+      }
+      .section {
+        page-break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-info {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#" class="print-btn" onclick="window.print(); return false;">📄 Save as PDF</a>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Abothula Srinu</h1>
+    <h2>Frontend Developer & Web Designer</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <span>📧</span>
+        <span>srinuabothula14@gmail.com</span>
+      </div>
+      <div class="contact-item">
+        <span>📱</span>
+        <span>+91 9398998803</span>
+      </div>
+      <div class="contact-item">
+        <span>📍</span>
+        <span>Srikakulam, Andhra Pradesh</span>
+      </div>
+      <div class="contact-item">
+        <span>💼</span>
+        <span>linkedin.com/in/abothula-srinu</span>
+      </div>
+      <div class="contact-item">
+        <span>💻</span>
+        <span>github.com/abothulasrinu3-prog</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objective -->
+  <div class="section">
+    <h2 class="section-title">Objective</h2>
+    <p class="about-content">
+      Motivated and goal-oriented 3rd-year B.Tech student specializing in Computer Science with AI & ML. Seeking opportunities to apply my programming skills in real-world projects and internships. Eager to contribute to dynamic environments that challenge and grow my technical and interpersonal strengths.
+    </p>
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <h2 class="section-title">Education</h2>
+    
+    <div class="education-item">
+      <div class="year">2023 - 2027 (Expected)</div>
+      <h3>B.Tech in Computer Science (AI & ML)</h3>
+      <p>GMR Institute of Technology — CGPA: 9.0</p>
+    </div>
+
+    <div class="education-item">
+      <div class="year">2021 - 2023</div>
+      <h3>Intermediate (MPC)</h3>
+      <p>Sri Chaitanya Junior College — 97%</p>
+    </div>
+
+    <div class="education-item">
+      <div class="year">June 2021</div>
+      <h3>SSC (10th Grade)</h3>
+      <p>Sri Santosh School — 95.6%</p>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="section">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Programming Languages</h3>
+        <ul class="skill-list">
+          <li>Python (Intermediate)</li>
+          <li>JavaScript (Advanced)</li>
+          <li>Java (Intermediate)</li>
+          <li>C/C++ (Basic)</li>
+        </ul>
+      </div>
+
+      <div class="skill-category">
+        <h3>Web Development</h3>
+        <ul class="skill-list">
+          <li>HTML5, CSS3, JavaScript ES6+</li>
+          <li>React.js, Node.js, Express.js</li>
+          <li>RESTful APIs, MongoDB</li>
+          <li>Responsive Design, Flexbox, Grid</li>
+        </ul>
+      </div>
+
+      <div class="skill-category">
+        <h3>AI & Machine Learning</h3>
+        <ul class="skill-list">
+          <li>Python (NumPy, Pandas, Scikit-learn)</li>
+          <li>Data Preprocessing & Visualization</li>
+          <li>Machine Learning Algorithms</li>
+          <li>Model Training & Evaluation</li>
+        </ul>
+      </div>
+
+      <div class="skill-category">
+        <h3>Tools & Technologies</h3>
+        <ul class="skill-list">
+          <li>Git & GitHub, VS Code</li>
+          <li>Netlify, Vercel (Deployment)</li>
+          <li>MongoDB, MySQL</li>
+          <li>Postman, npm</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="section">
+    <h2 class="section-title">Projects</h2>
+
+    <div class="project-item">
+      <h3>Portfolio Website</h3>
+      <p>Personal portfolio showcasing skills, projects, and certifications with responsive design, smooth animations, and interactive elements.</p>
+      <p class="tech-stack"><strong>Tech:</strong> HTML, CSS, JavaScript, Netlify</p>
+    </div>
+
+    <div class="project-item">
+      <h3>ATS Resume Scanner</h3>
+      <p>AI-powered resume scanner that analyzes compatibility with job descriptions and optimizes for ATS systems to improve job application success.</p>
+      <p class="tech-stack"><strong>Tech:</strong> React.js, Node.js, AI/ML, Vercel</p>
+    </div>
+
+    <div class="project-item">
+      <h3>Mental Health Platform</h3>
+      <p>Supportive mental health platform providing resources, therapy booking, and wellness tracking tools for users to manage mental well-being.</p>
+      <p class="tech-stack"><strong>Tech:</strong> React.js, Node.js, MongoDB, Express</p>
+    </div>
+  </div>
+
+  <!-- Certifications -->
+  <div class="section">
+    <h2 class="section-title">Certifications</h2>
+
+    <div class="certificate-item">
+      <h4>Full-Stack Web Development</h4>
+      <p>GeeksforGeeks (2024)</p>
+    </div>
+
+    <div class="certificate-item">
+      <h4>Python Essential 1</h4>
+      <p>CISCO</p>
+    </div>
+
+    <div class="certificate-item">
+      <h4>Artificial Intelligence</h4>
+      <p>LinkedIn Learning</p>
+    </div>
+  </div>
+
+  <!-- Soft Skills -->
+  <div class="section">
+    <h2 class="section-title">Soft Skills</h2>
+    <div class="skills-grid">
+      <ul class="skill-list">
+        <li>Communication Skills</li>
+        <li>Team Collaboration</li>
+        <li>Problem Solving</li>
+      </ul>
+      <ul class="skill-list">
+        <li>Presentation Abilities</li>
+        <li>Time Management</li>
+        <li>Quick Learner</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div class="section">
+    <h2 class="section-title">Languages</h2>
+    <ul class="skill-list">
+      <li>English (Fluent)</li>
+      <li>Telugu (Native)</li>
+      <li>Hindi (Basic)</li>
+    </ul>
+  </div>
+
+  <!-- Interests -->
+  <div class="section">
+    <h2 class="section-title">Interests</h2>
+    <ul class="skill-list">
+      <li>Web Development & UI/UX Design</li>
+      <li>Artificial Intelligence & Machine Learning</li>
+      <li>Open Source Contribution</li>
+      <li>Tech Blogging & Content Creation</li>
+    </ul>
+  </div>
+
+</body>
+</html>
