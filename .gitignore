@@ -1,2 +1,5 @@
 node_modules/ 
 .env 
+.netlify/functions/
+.netlify/functions-internal/
+.netlify/v1/
